@@ -1,12 +1,22 @@
 {
   "compilerOptions": {
-    "resolveJsonModule": true,
+    "target": "es2016" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "lib": ["DOM", "ESNext"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "module": "commonjs",
+    "rootDir": "./",
+    "baseUrl": "./",
+    // "paths": {},
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "./",
+    "removeComments": true,
     "esModuleInterop": true,
-    "target": "es6",
-    "moduleResolution": "node",
-    "outDir": "dist"
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true
+  }
 }
