@@ -1,3 +1,10 @@
-import { add } from '@src/math/add';
+import express from 'express';
 
-console.log(add(1, 2));
+const app = express();
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
+app.listen(3000, () => {
+  console.log('Server started on port 3000');
+});
