@@ -1,22 +1,25 @@
 {
   "compilerOptions": {
+    "module": "commonjs",
     "target": "es2016" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "lib": ["DOM", "ESNext"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "module": "commonjs",
-    "rootDir": "./",
-    "baseUrl": "./",
-    // "paths": {},
-    "resolveJsonModule": true,
     "allowJs": true,
-    "checkJs": true,
-    "outDir": "./",
-    "removeComments": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "rootDir": ".",
     "strict": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
-  }
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@/src": ["src/*"]
+    },
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": ["node_modules", "dist", "coverage"],
+  "include": ["src"]
 }
