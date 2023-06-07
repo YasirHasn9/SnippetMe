@@ -1,51 +1,47 @@
 {
   "env": {
     "es2021": true,
-    "node": true
+    "node": true,
+    "es6": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-    "prettier/@typescript-eslint"
-  ],
+  // "extends": [
+  //   "eslint:recommended",
+  //   "plugin:@typescript-eslint/recommended",
+  //   "plugin:import/errors",
+  //   "plugin:import/warnings",
+  //   "plugin:import/typescript",
+  //   "prettier/@typescript-eslint",
+  //   "plugin:prettier/recommended"
+  // ],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": "latest",
+    "ecmaVersion": 2020,
     "sourceType": "module"
-  },
-  "plugins": ["@typescript-eslint", "prettier", "import"],
-  "rules": {
-    "prettier/prettier": "error",
-    "import/extensions": "off",
-    "no-console": "off",
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-        "pathGroups": [
-          {
-            "pattern": "@/**",
-            "group": "internal"
-          }
-        ],
-        "pathGroupsExcludedImportTypes": ["builtin"]
-      }
-    ]
   },
   "settings": {
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json",
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
-    },
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
-    },
-    "project": "./tsconfig.json"
+    }
+  },
+  "rules": {
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "no-console": "off",
+    "no-var": "error",
+    "semi": "error",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "no-multi-spaces": "error",
+    "space-in-parens": "error",
+    "no-multiple-empty-lines": "error",
+    "prefer-const": "error"
   }
 }
