@@ -1,4 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
+import { UserController } from './controllers/user.controller';
+import { validateUserSchema } from './middlewares/userSchemaValidation.middleware';
 import Logger from 'src/utils/logger.utils';
 
 export const startServer = (app: Application) => {
@@ -37,14 +39,17 @@ export const startServer = (app: Application) => {
   });
 
   /* Routes */
-
   /*Health Check*/
-  app.get('/what', (req: Request, res: Response, next: NextFunction) => {
-    return res.status(200).json({ message: 'up' });
+  app.get('/ping', (req: Request, res: Response, next: NextFunction) => {
+    return res.status(200).json({ message: 'Pong' });
+  });
+
+  app.post('/users', validateUserSchema, async (req: Request, res: Response, next: NextFunction) => {
+    UserController(req, res, next);
   });
 
   /* Error Handling */
-  app.use((req: Request, res: Response, next: NextFunction) => {
+  app.use((req: Request, res: Response) => {
     const error = new Error('Not Found');
     Logger.error(error.message);
     return res.status(404).json({ error: error.message });
