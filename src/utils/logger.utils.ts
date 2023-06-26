@@ -7,7 +7,7 @@ export default class Logger {
       typeof args === 'string' ? chalk.blueBright(args) : args,
     );
 
-  public static warning = (args: any) =>
+  public static debugger = (args: any) =>
     console.log(
       chalk.yellow(`[${new Date().toLocaleDateString()}] [INFO]`),
       typeof args === 'string' ? chalk.yellowBright(args) : args,
