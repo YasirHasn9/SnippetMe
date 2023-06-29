@@ -5,4 +5,5 @@ export default {
   server: {
     port: process.env.PORT ? Number(process.env.PORT) : 3000,
   },
+  saltWorkFactor: process.env.SALT_WORK_FACTOR ? Number(process.env.SALT_WORK_FACTOR) : 10,
 };

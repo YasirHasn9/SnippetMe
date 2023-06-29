@@ -7,11 +7,9 @@ import { UserInput } from '../../types';
 
 const create = async (input: UserInput) => {
   try {
-    const user = await UserModel.create(input);
-    Logger.debugger(`created user: ${user}`);
-    return user;
+    return await UserModel.create(input);
   } catch (err: any) {
-    Logger.error(err.message);
+    Logger.error(err);
   }
 };
 
