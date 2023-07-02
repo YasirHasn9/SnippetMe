@@ -9,7 +9,17 @@ const create = async (input: UserInput) => {
     return omit(user.toJSON(), 'password');
   } catch (err: any) {
     Logger.error(err);
+    // maybe user the throw new Error function
   }
 };
 
-export const UserServices = { create };
+const findAll = async () => {
+  try {
+    const users = await UserModel.find();
+    return users;
+  } catch (err: any) {
+    Logger.error(`findUsers : ${err}`);
+  }
+};
+
+export const UserServices = { create, findAll };
