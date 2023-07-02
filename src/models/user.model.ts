@@ -33,8 +33,6 @@ usrSchema.pre('save', async function (next) {
   const hash = bcrypt.hashSync(user.password, salt);
 
   user.password = hash;
-  Logger.debugger(config.get<number>('saltWorkFactor'));
-  Logger.log(user);
   return next();
 });
 
