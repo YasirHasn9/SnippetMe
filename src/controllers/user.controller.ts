@@ -8,7 +8,7 @@ export const UserController = async (req: Request, res: Response, next: NextFunc
     const userInput = req.body;
     const user = await UserServices.create(userInput);
 
-    return res.status(201).send({ user });
+    res.status(201).send({ user });
   } catch (err: any) {
     Logger.error(err.message);
   }
