@@ -24,7 +24,22 @@ export const findUsers = async (req: Request, res: Response, next: NextFunction)
   }
 };
 
+export const findUserById = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId: string = req.params.id;
+    const user = await UserServices.findById(userId);
+    if (!user) {
+      return res.status(403).json({ error: 'User not found.' });
+    }
+    res.status(200).json({ user });
+  } catch (err: any) {
+    Logger.error(`findUserById ${err.message}`);
+    res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
 export const UserController = {
   createUser,
   findUsers,
+  findUserById,
 };

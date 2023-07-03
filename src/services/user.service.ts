@@ -1,6 +1,6 @@
 import { UserModel } from '@src/models/user.model';
 import Logger from '@src/utils/logger.utils';
-import { UserInput } from '../../types';
+import { UserInput, User } from '../../types';
 import { omit } from 'lodash';
 
 const create = async (input: UserInput) => {
@@ -22,4 +22,14 @@ const findAll = async () => {
   }
 };
 
-export const UserServices = { create, findAll };
+const findById = async (id: string): Promise<User | null> => {
+  try {
+    const user = await UserModel.findById(id);
+    return user;
+  } catch (err: any) {
+    Logger.error(`findById : ${err}`);
+    return null;
+  }
+};
+
+export const UserServices = { create, findAll, findById };

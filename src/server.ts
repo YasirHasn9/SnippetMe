@@ -1,6 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import { UserController } from './controllers/user.controller';
-import { validateUserSchema, validateDuplicate } from './middlewares/userValidation.middleware';
+import { validateUserSchema, validateDuplicate, idIsValid } from './middlewares/userValidation.middleware';
 import Logger from 'src/utils/logger.utils';
 
 export const startServer = (app: Application) => {
@@ -50,6 +50,10 @@ export const startServer = (app: Application) => {
 
   app.get('/users', async (req: Request, res: Response, next: NextFunction) => {
     UserController.findUsers(req, res, next);
+  });
+
+  app.get(`/users/:id`, idIsValid, async (req: Request, res: Response, next: NextFunction) => {
+    UserController.findUserById(req, res, next);
   });
 
   /* Error Handling */

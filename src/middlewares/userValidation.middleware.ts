@@ -11,6 +11,7 @@ import { NextFunction, Request, Response } from 'express';
 import { userValidationSchema } from '../../types';
 import { UserModel } from '@src/models/user.model';
 import Logger from '@src/utils/logger.utils';
+import { Types } from 'mongoose';
 
 export const validateUserSchema = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -40,6 +41,14 @@ export const validateDuplicate = async (req: Request, res: Response, next: NextF
   }
   next();
 };
+
+export function idIsValid(req: Request, res: Response, next: NextFunction) {
+  const id = req.params.id;
+  if (!Types.ObjectId.isValid(id)) {
+    return res.status(403).json({ error: 'Invalid id.' });
+  }
+  next();
+}
 
 /*
 const validate =

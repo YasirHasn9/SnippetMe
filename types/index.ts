@@ -14,6 +14,13 @@ export interface UserInput extends Document {
   password: string;
   age: number;
 }
+
+export interface User {
+  name?: string;
+  username: string;
+  email?: string;
+  age: number;
+}
 export const userValidationSchema = z.object({
   name: z.string().min(5, { message: 'Must be 5 or more characters long' }),
   username: z.string().min(5, { message: 'Must be 5 or more characters long' }),
