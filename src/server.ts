@@ -1,6 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import { UserController } from './controllers/user.controller';
-import { validateUserSchema } from './middlewares/userValidation.middleware';
+import { validateUserSchema, validateDuplicate } from './middlewares/userValidation.middleware';
 import Logger from 'src/utils/logger.utils';
 
 export const startServer = (app: Application) => {
@@ -44,7 +44,7 @@ export const startServer = (app: Application) => {
     return res.status(200).json({ message: 'Pong' });
   });
 
-  app.post('/users', validateUserSchema, async (req: Request, res: Response, next: NextFunction) => {
+  app.post('/users', validateUserSchema, validateDuplicate, async (req: Request, res: Response, next: NextFunction) => {
     UserController.createUser(req, res, next);
   });
 

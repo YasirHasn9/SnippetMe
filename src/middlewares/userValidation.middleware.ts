@@ -18,7 +18,7 @@ export const validateUserSchema = (req: Request, res: Response, next: NextFuncti
     userValidationSchema.parse(userData);
   } catch (err: any) {
     Logger.error(`validateUserSchema ${err.message}`);
-    res.status(403).send(err.message);
+    return res.status(500).json({ error: 'Internal server error.' });
   }
 
   next();
@@ -29,7 +29,10 @@ export const validateDuplicate = async (req: Request, res: Response, next: NextF
     const { username, email } = req.body;
     const isUserExisted = await UserModel.findOne().or([{ username }, { email }]);
     if (isUserExisted) {
-      res.status(409).json({ msg: `${username} or ${email} is already exists` });
+      /* Without a return statement,the server will throw an error indicating the headers cannot be
+      set due they are sent to client therefore cannot be modified
+      */
+      return res.status(409).json({ msg: `${username} or ${email} is already exists` });
     }
   } catch (err: any) {
     Logger.error(`validateDuplicate ${err.message}`);
