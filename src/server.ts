@@ -1,7 +1,11 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
+import cors from 'cors';
 import { UserController } from './controllers/user.controller';
 import { validateUserSchema, validateDuplicate, idIsValid } from './middlewares/userValidation.middleware';
 import Logger from 'src/utils/logger.utils';
+import config from 'config';
+
+import { userRoutes } from './routes/users.route';
 
 export const startServer = (app: Application) => {
   /* Middlewares for information*/
@@ -20,6 +24,8 @@ export const startServer = (app: Application) => {
   });
 
   /* House Keeping */
+  // all requests from different domains
+  app.use(cors());
   // parse application/json
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
@@ -38,24 +44,17 @@ export const startServer = (app: Application) => {
     next();
   });
 
+  // TODO: Handle all the operations for uses in function
+  // app.use('users', userCrud);
+  // app.use('commun', accountCrud);
+
   /* Routes */
   /*Health Check*/
   app.get('/ping', (req: Request, res: Response) => {
-    return res.status(200).json({ message: 'Pong' });
+    return res.status(200).json({ message: 'Pong', environment: config.get('env') });
   });
 
-  app.post('/users', validateUserSchema, validateDuplicate, async (req: Request, res: Response, next: NextFunction) => {
-    UserController.createUser(req, res, next);
-  });
-
-  app.get('/users', async (req: Request, res: Response, next: NextFunction) => {
-    UserController.findUsers(req, res, next);
-  });
-
-  app.get(`/users/:id`, idIsValid, async (req: Request, res: Response, next: NextFunction) => {
-    UserController.findUserById(req, res, next);
-  });
-
+  app.use('/users', userRoutes);
   /* Error Handling */
   app.use((req: Request, res: Response) => {
     const error = new Error('Not Found');
