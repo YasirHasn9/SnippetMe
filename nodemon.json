@@ -1,6 +1,19 @@
 {
-  "watch": ["src"],
-  "ext": "ts",
-  "ignore": [],
-  "exec": "ts-node -r tsconfig-paths/register src/app.ts"
+  "watch": [
+    "src",
+    "test",
+    "config"
+  ],
+  "ext": "ts,js,json",
+  "ignore": [
+    "node_modules",
+    "coverage",
+    "build",
+    "dist"
+  ],
+  "exec": "ts-node -r tsconfig-paths/register src/app.ts",
+  "verbose": false,
+  "env": {
+    "NODE_ENV": "dev"
+  }
 }
