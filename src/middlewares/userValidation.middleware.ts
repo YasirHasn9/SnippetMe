@@ -19,7 +19,7 @@ export const validateUserSchema = (req: Request, res: Response, next: NextFuncti
     userValidationSchema.parse(userData);
   } catch (err: any) {
     Logger.error(`validateUserSchema ${err.message}`);
-    return res.status(500).json({ error: 'Internal server error.' });
+    return res.status(500).json({ error: err });
   }
 
   next();
@@ -33,7 +33,7 @@ export const validateDuplicate = async (req: Request, res: Response, next: NextF
       /* Without a return statement,the server will throw an error indicating the headers cannot be
       set due they are sent to client therefore cannot be modified
       */
-      return res.status(409).json({ msg: `${username} or ${email} is already exists` });
+      return res.status(409).json({ msg: `${username} is already exists` });
     }
   } catch (err: any) {
     Logger.error(`validateDuplicate ${err.message}`);
@@ -45,7 +45,7 @@ export const validateDuplicate = async (req: Request, res: Response, next: NextF
 export function idIsValid(req: Request, res: Response, next: NextFunction) {
   const id = req.params.id;
   if (!Types.ObjectId.isValid(id)) {
-    return res.status(403).json({ error: 'Invalid id.' });
+    return res.status(403).json({ error: 'Invalid Id.' });
   }
   next();
 }
