@@ -57,9 +57,22 @@ const updatedUserById = async (req: Request, res: Response, next: NextFunction) 
   }
 };
 
+const removeUserById = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.params.id;
+    await UserServices.deleteById(userId);
+    return res.status(200).json({ msg: 'User Deleted' });
+  } catch (err) {
+    Logger.error(`deleteUserById ${err}`);
+    next(err);
+    res.status(500).json({ error: err });
+  }
+};
+
 export const UserController = {
   createUser,
   findUsers,
   findUserById,
   updatedUserById,
+  removeUserById,
 };

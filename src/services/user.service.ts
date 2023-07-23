@@ -45,4 +45,14 @@ const updateUser = async (id: string, updatedUser: User): Promise<User | null> =
   }
 };
 
-export const UserServices = { create, findAll, findById, updateUser };
+const deleteById = async (id: string) => {
+  try {
+    await UserModel.findByIdAndDelete(id);
+    return true;
+  } catch (err: any) {
+    Logger.debugger(`deleteUser : ${err}`);
+    throw new Error(err);
+  }
+};
+
+export const UserServices = { create, findAll, findById, updateUser, deleteById };

@@ -20,4 +20,8 @@ router.put('/:id', idIsValid, validateDuplicate, async (req: Request, res: Respo
   UserController.updatedUserById(req, res, next);
 });
 
+router.delete('/:id', idIsValid, async (req: Request, res: Response, next: NextFunction) => {
+  UserController.removeUserById(req, res, next);
+});
+
 export { router as userRoutes };
