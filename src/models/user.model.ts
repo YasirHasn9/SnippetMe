@@ -12,14 +12,15 @@ interface UserDocument extends UserInput, Document {
 const usrSchema = new Schema<UserInput>(
   {
     name: { type: 'string', required: true },
-    username: { type: 'string', required: true },
+    username: { type: 'string', required: true, unique: true },
     email: { type: 'string', required: true, unique: true },
     password: { type: 'string', required: true },
     age: { type: 'number', required: true },
+    role: { type: 'string', required: true, default: 'basic' },
   },
   {
     minimize: false,
-    // this will the createdAt and updatedAt properties
+    // this will generate the createdAt and updatedAt properties, on creation and updating
     timestamps: true,
   },
 );
