@@ -1,7 +1,5 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-import { UserController } from './controllers/user.controller';
-import { validateUserSchema, validateDuplicate, idIsValid } from './middlewares/userValidation.middleware';
 import Logger from 'src/utils/logger.utils';
 import config from 'config';
 
@@ -43,10 +41,6 @@ export const startServer = (app: Application) => {
 
     next();
   });
-
-  // TODO: Handle all the operations for uses in function
-  // app.use('users', userCrud);
-  // app.use('commun', accountCrud);
 
   /* Routes */
   /*Health Check*/
