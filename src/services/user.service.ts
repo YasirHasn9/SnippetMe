@@ -50,9 +50,27 @@ const deleteById = async (id: string) => {
     await UserModel.findByIdAndDelete(id);
     return true;
   } catch (err: any) {
-    Logger.debugger(`deleteUser : ${err}`);
+    Logger.error(`deleteUser : ${err}`);
     throw new Error(err);
   }
 };
 
-export const UserServices = { create, findAll, findById, updateUser, deleteById };
+const findByEmailOrUsername = async (email?: string, username?: string) => {
+  try {
+    let user;
+    if (!email && !username) {
+      return null;
+    }
+    if (email?.length) {
+      user = (await UserModel.findOne({ email: email })) ?? null;
+    }
+    if (username?.length) {
+      user = (await UserModel.findOne({ username: username })) ?? null;
+    }
+    return user;
+  } catch (err: any) {
+    Logger.error(`findByEmail : ${err}`);
+    throw new Error(err);
+  }
+};
+export const UserServices = { create, findAll, findById, updateUser, deleteById, findByEmailOrUsername };
