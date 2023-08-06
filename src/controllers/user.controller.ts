@@ -1,9 +1,35 @@
 // I need the service for creating a user
 import { Request, Response, NextFunction } from 'express';
+import bcrypt from 'bcrypt';
 import { UserServices } from '@src/services/user.service';
 import Logger from '@src/utils/logger.utils';
 
-const createUser = async (req: Request, res: Response, next: NextFunction) => {
+// When a user attempts to log in, you should hash the provided password and
+// compare it to the stored hash value in the database.
+// If they match, it means the password is correct without needing to decrypt anything.
+const userLogin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { username, password, email } = req.body;
+    const user = await UserServices.findByEmailOrUsername(email, username);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(403).json({ message: 'Wrong password' });
+    }
+
+    return res.status(200).json({ message: 'User login successful' });
+  } catch (err: any) {
+    Logger.error(`Login failed: ${err.message}`);
+    next(err);
+    res.status(403).json({ err: err.message });
+  }
+};
+
+const userRegister = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userInput = req.body;
     const user = await UserServices.create(userInput);
@@ -65,12 +91,13 @@ const removeUserById = async (req: Request, res: Response, next: NextFunction) =
   } catch (err) {
     Logger.error(`deleteUserById ${err}`);
     next(err);
-    res.status(500).json({ error: err });
+    return res.status(500).json({ error: err });
   }
 };
 
 export const UserController = {
-  createUser,
+  userLogin,
+  userRegister,
   findUsers,
   findUserById,
   updatedUserById,
